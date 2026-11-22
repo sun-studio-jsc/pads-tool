@@ -15,7 +15,7 @@
       "maxFileSizeMB": 10,
       "injectScripts": [
         {
-          "source": "cta.Preview.js",
+          "source": "/js/cta.Preview.js",
           "position": "beforeHeadEnd"
         }
       ],
@@ -28,7 +28,7 @@
       "maxFileSizeMB": 5,
       "injectScripts": [
         {
-          "source": "fb_validator.js",
+          "source": "/js/fb_validator.js",
           "position": "beforeHeadEnd"
         }
       ],
@@ -44,7 +44,7 @@
       "maxFileSizeMB": 10,
       "injectScripts": [
         {
-          "source": "mraid.js",
+          "source": "/js/mraid.js",
           "position": "afterBodyStart"
         }
       ],
@@ -73,7 +73,7 @@
       "defaultLanguage": "ru",
       "injectScripts": [
         {
-          "source": "/sdk.js",
+          "source": "/js/sdk.js",
           "position": "beforeHeadEnd"
         }
       ],
@@ -86,7 +86,7 @@
       "maxFileSizeMB": 5,
       "injectScripts": [
         {
-          "source": "/applovin.js",
+          "source": "/js/applovin.js",
           "position": "afterBodyStart"
         }
       ],
@@ -99,7 +99,7 @@
       "maxFileSizeMB": 10,
       "injectScripts": [
         {
-          "source": "/ads-manager.js",
+          "source": "/js/ads-manager.js",
           "position": "afterHeadStart"
         }
       ],

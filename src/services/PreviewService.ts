@@ -626,11 +626,11 @@ export class PreviewService {
   }
 
   private hasScriptSourceReference(html: string, source: string): boolean {
-    const normalizedSource = source.startsWith(window.location.origin)
-      ? source.slice(window.location.origin.length)
-      : source;
-    const escapedSource = normalizedSource.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(`<script[^>]+src\\s*=\\s*["']${escapedSource}["']`, 'i').test(html);
+    // Match on the file name so a playable's `<script src="mraid.js">` still counts
+    // when the shim itself is served from a subfolder (e.g. /js/mraid.js).
+    const fileName = source.split(/[?#]/)[0].split('/').pop() ?? source;
+    const escapedName = fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`<script[^>]+src\\s*=\\s*["'](?:[^"']*/)?${escapedName}(?:[?#][^"']*)?["']`, 'i').test(html);
   }
 
   /**
