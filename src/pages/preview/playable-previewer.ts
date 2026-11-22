@@ -1,4 +1,4 @@
-import { ComponentBase, customElement, html, inject, state, property } from "fw";
+import { ComponentBase, customElement, html, inject, state, property, withBase } from "fw";
 import type { PropertyValues } from 'lit';
 import { PreviewService } from "../../services/PreviewService";
 import { VideoStorageService } from "../../services/VideoStorageService";
@@ -1627,7 +1627,7 @@ export class PlayablePreviewer extends ComponentBase {
                         `}
                   </div>
                   ${mockup ? html`
-                    <img class="pointer-events-none absolute select-none" style=${mockup.imgStyle} src=${mockup.src} alt="" draggable="false" />
+                    <img class="pointer-events-none absolute select-none" style=${mockup.imgStyle} src=${withBase(mockup.src)} alt="" draggable="false" />
                   ` : null}
                 </div>
               </div>

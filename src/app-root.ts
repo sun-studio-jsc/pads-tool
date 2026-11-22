@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { ComponentBase, customElement, html, navigate } from "./fw";
+import { ComponentBase, customElement, getCurrentPath, html, navigate } from "./fw";
 import "./fw/update-notification";
 
 import "./theme.css";
@@ -14,7 +14,7 @@ export class AppRoot extends ComponentBase {
   connectedCallback() {
     super.connectedCallback();
     // This clone only ships the preview tool, so the root path goes straight to it.
-    if (window.location.pathname === "/") {
+    if (getCurrentPath() === "/") {
       navigate("/preview", { replace: true });
     }
   }

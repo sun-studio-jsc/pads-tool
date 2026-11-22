@@ -1,4 +1,4 @@
-import { ComponentBase, customElement, html, getCurrentPath, navigate } from "fw";
+import { ComponentBase, customElement, html, getCurrentPath, navigate, withBase } from "fw";
 import { getNavigationEventName } from "../fw/router";
 
 interface MenuItem {
@@ -67,7 +67,7 @@ export class NavMenu extends ComponentBase {
                 return html`
                   <li>
                     <a
-                      href=${item.path}
+                      href=${withBase(item.path)}
                       class="${baseClasses} ${isActive ? activeClasses : inactiveClasses}"
                       aria-current=${isActive ? "page" : "false"}
                       @click=${(e: MouseEvent) => {

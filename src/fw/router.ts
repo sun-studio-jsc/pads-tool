@@ -19,8 +19,20 @@ export function getNavigationEventName() {
     return NAVIGATION_EVENT;
 }
 
+// Deploy prefix from Vite's `base` (e.g. "/playble-ads-tool"); "" when served from the domain root.
+const BASE_PREFIX = (import.meta.env.BASE_URL || "/").replace(/\/+$/, "");
+
+/** Prefixes an app-absolute path ("/preview", "/mockups/x.png") with the deploy base. */
+export function withBase(path: string): string {
+    return path.startsWith("/") && !path.startsWith("//") ? `${BASE_PREFIX}${path}` : path;
+}
+
 export function getCurrentPath() {
-    return window.location.pathname || "/";
+    const pathname = window.location.pathname || "/";
+    if (BASE_PREFIX && (pathname === BASE_PREFIX || pathname.startsWith(`${BASE_PREFIX}/`))) {
+        return pathname.slice(BASE_PREFIX.length) || "/";
+    }
+    return pathname;
 }
 
 export function getCurrentSearch() {
@@ -31,7 +43,7 @@ export function navigate(path: string, options: { replace?: boolean } = {}) {
     const normalizedPath = path.startsWith("/") ? path : `/${path}`;
     const oldUrl = window.location.href;
     const method = options.replace ? "replaceState" : "pushState";
-    window.history[method]({}, "", normalizedPath);
+    window.history[method]({}, "", withBase(normalizedPath));
     dispatchNavigationEvent({ oldUrl, newUrl: window.location.href });
 }
 

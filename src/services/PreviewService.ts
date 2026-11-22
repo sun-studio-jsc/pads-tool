@@ -1,4 +1,4 @@
-import { injectable } from "fw";
+import { injectable, withBase } from "fw";
 import ffmpegCoreUrl from "@ffmpeg/core?url";
 import ffmpegWasmUrl from "@ffmpeg/core/wasm?url";
 import ffmpegWorkerSource from "@ffmpeg/ffmpeg/worker?raw";
@@ -615,7 +615,7 @@ export class PreviewService {
    */
   private async loadScriptContent(source: string): Promise<string> {
     // If source starts with '/', it's relative to the domain root
-    const fullUrl = source.startsWith('/') ? `${window.location.origin}${source}` : source;
+    const fullUrl = source.startsWith('/') ? `${window.location.origin}${withBase(source)}` : source;
     console.log(`Loading script from: ${fullUrl}`);
     
     const response = await fetch(fullUrl);

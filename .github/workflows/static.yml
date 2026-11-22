@@ -34,6 +34,9 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          # Project Pages are served from /<repo-name>/
+          VITE_BASE: /${{ github.event.repository.name }}/
         run: npm run build
 
       # Pages has no SPA fallback: a refresh on /preview would 404.

@@ -1,10 +1,10 @@
-import { ComponentBase, customElement, html } from "fw";
+import { ComponentBase, customElement, html, withBase } from "fw";
 
 @customElement("site-logo")
 export class SiteLogo extends ComponentBase {
   render() {
     return html`
-      <a href="/" class="flex items-center gap-4 no-underline">
+      <a href=${withBase("/")} class="flex items-center gap-4 no-underline">
         <svg width="40" height="40" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
           <circle cx="256" cy="256" r="230" fill="none" stroke="#3B82F6" stroke-width="42"/>
           <g transform="translate(256, 256) rotate(-15) scale(0.6) translate(-256, -286)">

@@ -2,7 +2,8 @@ import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
-  base: "/",
+  // Set VITE_BASE (e.g. "/playble-ads-tool/") when deploying under a subpath such as GitHub Pages.
+  base: process.env.VITE_BASE || "/",
   server: {
     port: 5173,
     strictPort: true,
