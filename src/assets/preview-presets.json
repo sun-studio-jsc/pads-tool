@@ -1,0 +1,133 @@
+{
+  "presets": [
+    {
+      "id": "default",
+      "name": "Just Preview",
+      "description": "Standard preview without any ad network validation",
+      "maxFileSizeMB": 10,
+      "injectScripts": [],
+      "replaceTokens": {}
+    },
+    {
+      "id": "preview-cta",
+      "name": "CTA SDK",
+      "description": "Injects a CTA SDK stub for testing SDK integration. All CTA events (onClick, gameReady, trackEvent, etc.) are logged in the SDK Event Log panel.",
+      "maxFileSizeMB": 10,
+      "injectScripts": [
+        {
+          "source": "cta.Preview.js",
+          "position": "beforeHeadEnd"
+        }
+      ],
+      "replaceTokens": {}
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook Validator",
+      "description": "Facebook ad network validation with content security policies",
+      "maxFileSizeMB": 5,
+      "injectScripts": [
+        {
+          "source": "fb_validator.js",
+          "position": "beforeHeadEnd"
+        }
+      ],
+      "replaceTokens": {
+        "XMLHttpRequest": "_xrq_"
+      }
+    }
+    ,
+    {
+      "id": "mraid",
+      "name": "MRAID Preview",
+      "description": "Preview configured for MRAID playables. Useful when testing playables targeted to ad networks that use MRAID (examples: Unity, IronSource, AppLovin, Vungle, Mintegral, MoPub). Injects mraid.js where appropriate and preserves MRAID API behavior when available.",
+      "maxFileSizeMB": 10,
+      "injectScripts": [
+        {
+          "source": "mraid.js",
+          "position": "afterBodyStart"
+        }
+      ],
+      "replaceTokens": {}
+    },
+    {
+      "id": "yandex-games",
+      "name": "Yandex Games SDK",
+      "description": "Preview configured for Yandex Games HTML5 titles. Injects a local /sdk.js shim, simulates YaGames.init(), pause/resume events, ads, purchases, leaderboards and other SDK flows used during moderation.",
+      "maxFileSizeMB": 100,
+      "supportsLanguageSwitching": true,
+      "availableLanguages": [
+        {
+          "code": "ru",
+          "label": "Russian"
+        },
+        {
+          "code": "en",
+          "label": "English"
+        },
+        {
+          "code": "tr",
+          "label": "Turkish"
+        }
+      ],
+      "defaultLanguage": "ru",
+      "injectScripts": [
+        {
+          "source": "/sdk.js",
+          "position": "beforeHeadEnd"
+        }
+      ],
+      "replaceTokens": {}
+    },
+    {
+      "id": "applovin",
+      "name": "AppLovin MAX",
+      "description": "Preview configured for AppLovin MAX playables. Renders the creative inside an MRAID container stub (ready/viewableChange/open lifecycle) and logs the AppLovin MAX analytics stream (impression, engagement, CTA click, etc.) in the SDK Event Log. Enforces AppLovin's single self-contained HTML requirement and 5MB limit. Drive events manually via window.__applovinSimulate.",
+      "maxFileSizeMB": 5,
+      "injectScripts": [
+        {
+          "source": "/applovin.js",
+          "position": "afterBodyStart"
+        }
+      ],
+      "replaceTokens": {}
+    },
+    {
+      "id": "ads-manager",
+      "name": "APK Wrapper (GameAds)",
+      "description": "Preview for playables built for the custom APK wrapper. The game ships its own platform.js (window.GameAds); this preset injects a mock native window.AdsBridge that platform.js routes through, so GameAds.showRewarded/showInterstitial calls show an ad stub overlay with a 3s timer and a close button. Drive outcomes via window.__adsSim. Bridge-level calls and resolved statuses are logged in the SDK Event Log.",
+      "maxFileSizeMB": 10,
+      "injectScripts": [
+        {
+          "source": "/ads-manager.js",
+          "position": "afterHeadStart"
+        }
+      ],
+      "replaceTokens": {}
+    },
+    {
+      "id": "google-ads",
+      "name": "Google Ads",
+      "description": "Pre-checks a Google Ads playable: ZIP package of at most 5MB with an HTML5 entry file. Final validation: Google H5 Validator.",
+      "maxFileSizeMB": 5,
+      "injectScripts": [],
+      "replaceTokens": {}
+    },
+    {
+      "id": "unity",
+      "name": "Unity Ads",
+      "description": "Pre-checks a Unity Ads playable: single HTML file of at most 5MB, MRAID-based, with iOS store links on apps.apple.com. Final validation: Unity test app.",
+      "maxFileSizeMB": 5,
+      "injectScripts": [],
+      "replaceTokens": {}
+    },
+    {
+      "id": "mintegral",
+      "name": "Mintegral",
+      "description": "Pre-checks a Mintegral playable: ZIP package of at most 5MB with an HTML5 entry file. Final validation: Mindworks Review tool.",
+      "maxFileSizeMB": 5,
+      "injectScripts": [],
+      "replaceTokens": {}
+    }
+  ]
+}

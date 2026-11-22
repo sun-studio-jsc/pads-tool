@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/playable-tools.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#3b82f6" />
+  <meta name="site-origin" content="https://tools.gritsenko.biz" />
+  <meta name="description" content="Open-source tools for HTML5 playable ads developers, including publishing, preview, validation, Base64 conversion, and video-to-sprite workflows." />
+  <title>Playable Ad Preview</title>
+  <!-- OpenGraph Meta Tags for Social Networks and Messengers -->
+  <meta property="og:title" content="Gritsenko Playable Ads Tools" />
+  <meta property="og:description" content="This app provides a collection of open-source, useful tools for HTML5 playable ads developers. Core features: Publish to Ad Networks, Assets Compression, Base64 Converter, Video to Sprite, Folder Size Visualizer, CTA SDK Documentation, Ad Network Requirements, Playable Ads Preview & Sharing." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tools.gritsenko.biz/" />
+  <meta property="og:image" content="https://tools.gritsenko.biz/large-image.jpg" />
+  <meta property="og:image:alt" content="Playable Ads Tools logo" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Gritsenko Playable Ads Tools" />
+  <meta name="twitter:description" content="Open-source tools for HTML5 playable ads developers. Publish, validate, compress, convert, and share your ads easily. Features Base64 conversion, video to sprite, and more." />
+  <meta name="twitter:image" content="https://tools.gritsenko.biz/large-image.jpg" />
+  
+  <!-- Fonts and Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  
+  <!-- Cache API Error Handler for Service Workers -->
+  <script>
+    // Patch Cache API to prevent "Entry already exists" errors
+    // This must run before any service worker caching operations
+    if ('caches' in self) {
+      const originalPut = Cache.prototype.put;
+      Cache.prototype.put = async function(request, response) {
+        try {
+          return await originalPut.call(this, request, response);
+        } catch (error) {
+          if (error instanceof DOMException && error.name === 'InvalidAccessError') {
+            console.debug('[Cache API] Entry already exists, skipping duplicate cache operation');
+            return;
+          }
+          throw error;
+        }
+      };
+    }
+  </script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#2563EB",
+            "background-light": "#F8FAFC",
+            "background-dark": "#0F172A",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+          },
+        },
+      },
+    };
+  </script>
+
+  <script>
+    (function () {
+      var hash = window.location.hash ? window.location.hash.slice(1) : "";
+      if (!hash) {
+        return;
+      }
+
+      var shouldTreatAsLegacyRoute = hash.startsWith("/") || window.location.pathname === "/";
+      if (!shouldTreatAsLegacyRoute) {
+        return;
+      }
+
+      var normalized = hash.startsWith("/") ? hash : "/" + hash;
+      var parts = normalized.split("?");
+      var pathname = parts[0] || "/";
+      var search = parts[1] ? "?" + parts[1] : "";
+      history.replaceState({}, "", pathname + search);
+    })();
+  </script>
+
+  <script type="module" src="/src/app-root.ts"></script>
+</head>
+<body>
+  <!-- Yandex.Metrika counter -->
+  <app-root></app-root>
+</body>
+
+</html>

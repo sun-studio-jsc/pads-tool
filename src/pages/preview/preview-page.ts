@@ -1,0 +1,933 @@
+import {
+  ComponentBase,
+  customElement,
+  html,
+  route,
+  inject,
+  state,
+  fromQuery,
+  navigate,
+} from "fw";
+import { PreviewService } from "../../services/PreviewService";
+import { PortfolioService, type PlayableAdData } from "../../services/PortfolioService";
+import { AuthenticationService } from "../../services/AuthenticationService";
+import { PlayablePublishService } from "../../services/PlayablePublishService";
+import { ApiClient } from "../../services/ApiClient";
+import { BACKEND_FEATURES_ENABLED } from "../../features";
+import "../backend-disabled-page";
+import "./recordings-list-section";
+import QRCode from "qrcode";
+
+@customElement("preview-page")
+@route("/preview/:playableId?", {
+  title: "Playable Ad Preview | PlayableTools",
+  description: "Preview playable ads on different devices and orientations.",
+})
+export class PreviewPage extends ComponentBase {
+  @inject(PreviewService) previewService!: PreviewService;
+  @inject(PortfolioService) portfolioService!: PortfolioService;
+  @inject(AuthenticationService) authService!: AuthenticationService;
+  @inject(PlayablePublishService) publishService!: PlayablePublishService;
+  @inject(ApiClient) apiClient!: ApiClient;
+  
+  routeParams: string[] = [];
+  private unsubscribeAuth?: () => void;
+  private portfolioLoadRequestId = 0;
+  private urlLoadRequestId = 0;
+  isAuthenticated: boolean = false;
+  disconnectedCallback() {
+    super.disconnectedCallback?.();
+    // On page unload, reload recentUrls for next mount
+    const stored = localStorage.getItem("preview-recent-urls");
+    if (stored) {
+      try {
+        this.recentUrls = JSON.parse(stored);
+      } catch {
+        this.recentUrls = [];
+      }
+    }
+    window.removeEventListener("popstate", this.handlePopState);
+    window.removeEventListener("beforeunload", this._onBeforeUnload);
+    this.unsubscribeAuth?.();
+    this.unsubscribeAuth = undefined;
+    // playable-screen-lock handled inside previewer
+  }
+
+  urlInput: string = "";
+  decodedUrl: string = "";
+  recentUrls: string[] = [];
+  @fromQuery("url") get encodedUrl(): string | undefined {
+    return this._encodedUrlFromQuery;
+  }
+  private _encodedUrlFromQuery?: string;
+  isEncoded: boolean = false;
+  uploadedFileName: string = "";
+  uploadError: string = "";
+  isUploading: boolean = false;
+  @state()
+  isLoadingUrl: boolean = false;
+  @state()
+  urlLoadError: string = "";
+  @state()
+  isLoadingPortfolioPlayable: boolean = false;
+  @state()
+  portfolioPlayableId: string | null = null;
+  @state()
+  portfolioPlayableData: PlayableAdData | null = null;
+  @state()
+  portfolioProjectTitle: string | null = null;
+  @state()
+  portfolioLoadError: string = "";
+
+  // Share / QR / Direct Link state
+  _shareModalOpen: boolean = false;
+  _shareLoading: boolean = false;
+  _shareError: string = '';
+  _shareUrl: string | null = null;
+  _qrDataUrl: string | null = null;
+  _shareCopied: boolean = false;
+  _sharePageCopied: boolean = false;
+
+  get hasUnsavedChanges(): boolean {
+    return this.previewService.hasUnsavedChanges();
+  }
+
+  private _onBeforeUnload = (e: BeforeUnloadEvent) => {
+    if (this.hasUnsavedChanges && !(window as any).isSavingPlayable) {
+      e.preventDefault();
+      e.returnValue = "";
+    }
+  };
+
+  connectedCallback() {
+    super.connectedCallback();
+    if (BACKEND_FEATURES_ENABLED) {
+      void this.initializeAuthState();
+      this.unsubscribeAuth?.();
+      this.unsubscribeAuth = this.authService.subscribe((reason?: string) => {
+        this.isAuthenticated = false;
+        this.requestUpdate();
+        if (reason) {
+          console.log("Preview session expired:", reason);
+        }
+      });
+    }
+    
+    console.log(`📄 preview-page: connectedCallback, routeParams=${JSON.stringify(this.routeParams)}`);
+    
+    // Check if we have a playable ID from route params (portfolio playable)
+    if (this.routeParams && this.routeParams[0] && !BACKEND_FEATURES_ENABLED) {
+      // Shared library links point at the retired backend - render the notice instead of fetching.
+      console.log("⛔ preview-page: library link ignored, backend features are disabled");
+    } else if (this.routeParams && this.routeParams[0]) {
+      const playableId = this.routeParams[0];
+      console.log(`📁 preview-page: Loading portfolio playable: ${playableId}`);
+      this.portfolioPlayableId = playableId;
+      this.portfolioPlayableData = null;
+      this.portfolioProjectTitle = null;
+      this.portfolioLoadError = "";
+      this.loadPortfolioPlayable(playableId);
+    } else {
+      // No route params - clear portfolio-related state
+      this.portfolioPlayableId = null;
+      this.portfolioPlayableData = null;
+      this.portfolioProjectTitle = null;
+      this.portfolioLoadError = "";
+      this.previewService.setPortfolioPlayableId(null);
+      
+      // Load recent URLs from localStorage for quick access
+      const stored = localStorage.getItem("preview-recent-urls");
+      if (stored) {
+        try {
+          this.recentUrls = JSON.parse(stored);
+        } catch {
+          this.recentUrls = [];
+        }
+      }
+      // Clear preview state - user will upload or select from recent
+      this.isEncoded = false;
+      this.decodedUrl = "";
+      
+      // Check if there's already a filename in PreviewService (e.g. from PortfolioPage)
+      const serviceFileName = this.previewService.getUploadedFileName();
+      if (serviceFileName) {
+        this.uploadedFileName = serviceFileName;
+        // portfolioPlayableId is already cleared above
+      }
+
+      const initialUrl = this.getUrlFromQuery();
+      if (initialUrl) {
+        void this.loadPlayableFromUrl(initialUrl, { fromEncodedQuery: true });
+      }
+    }
+    
+    // Listen for browser navigation (back/forward)
+    window.addEventListener("popstate", this.handlePopState);
+    window.addEventListener("beforeunload", this._onBeforeUnload);
+
+    // Force re-render with cleared/initialized state
+    this.requestUpdate();
+
+    // playable-screen-lock is handled inside the previewer component
+  }
+
+  private async initializeAuthState() {
+    try {
+      await this.portfolioService.initialize();
+      this.isAuthenticated = this.portfolioService.isAuthenticated();
+      this.requestUpdate();
+    } catch {
+      this.isAuthenticated = false;
+    }
+  }
+
+  private async loadPortfolioPlayable(playableId: string) {
+    const requestId = ++this.portfolioLoadRequestId;
+    this.isLoadingPortfolioPlayable = true;
+    this.portfolioPlayableId = playableId;
+    this.portfolioLoadError = "";
+    this.previewService.setPortfolioPlayableId(playableId);
+    this.portfolioPlayableData = null;
+    this.portfolioProjectTitle = null;
+    this.previewService.clearUploadedContent();
+    this.previewService.setUploadedFileName(null);
+    this.uploadedFileName = "";
+    this.uploadError = "";
+    this.isEncoded = false;
+    this.decodedUrl = "";
+    this.requestUpdate();
+
+    try {
+      await this.portfolioService.initialize();
+      const playable = await this.portfolioService.getPlayableById(playableId);
+      if (requestId !== this.portfolioLoadRequestId) {
+        return;
+      }
+
+      if (playable) {
+        console.log(`✅ preview-page: Portfolio playable loaded: ${playable.name}, contentType: ${playable.contentType}`);
+        const fileDisplayName = playable.originalName || playable.title || playable.name || "Portfolio Playable";
+        this.uploadedFileName = fileDisplayName;
+
+        // Check if playable has binary content (ZIP)
+        if (playable.fileBlob) {
+          const fileName = fileDisplayName.toLowerCase().endsWith(".zip") ? fileDisplayName : `${fileDisplayName}.zip`;
+          const zipFile = new File(
+            [playable.fileBlob],
+            fileName,
+            { type: playable.contentType || 'application/zip' }
+          );
+
+          // Use ZIP preview flow (handles all assets via service worker)
+          await this.previewService.handleZipUpload(zipFile);
+          // Ensure filename is set correctly in service for proper UI display
+          this.previewService.setUploadedFileName(fileDisplayName);
+          console.log(`✅ preview-page: Loaded ZIP playable with ${zipFile.size} bytes`);
+        } else if (playable.content) {
+          // Use existing HTML flow for non-ZIP files
+          // Load content into PreviewService using same pipeline as file uploads (preset processing + validation)
+          await this.previewService.loadHtmlContentFromString(playable.content, this.uploadedFileName);
+          console.log(`✅ preview-page: Loaded HTML playable with ${playable.content.length} chars`);
+        } else {
+          console.error("❌ preview-page: Playable has no content (no blob, no string)");
+          this.uploadedFileName = "";
+          this.portfolioPlayableData = null;
+          this.portfolioProjectTitle = null;
+          this.portfolioLoadError = "The selected playable was found, but its file content could not be loaded.";
+          return;
+        }
+
+        this.portfolioPlayableData = playable;
+        this.portfolioLoadError = "";
+
+        const projectKey = (playable.project ?? "").trim();
+        if (projectKey.length > 0) {
+          try {
+            // Try to fetch project by ID for its full name
+            const project = await this.portfolioService.getProjectById(projectKey);
+            this.portfolioProjectTitle = project?.name ?? projectKey;
+          } catch {
+            // If project fetch fails (not found or not authorized), use the key as title
+            this.portfolioProjectTitle = projectKey;
+          }
+        } else {
+          this.portfolioProjectTitle = null;
+        }
+      } else {
+        console.error("❌ preview-page: Playable not found");
+        this.uploadedFileName = "";
+        this.portfolioPlayableData = null;
+        this.portfolioProjectTitle = null;
+        this.portfolioLoadError = "Playable not found. It may have been deleted or the link is incomplete.";
+      }
+    } catch (error) {
+      if (requestId !== this.portfolioLoadRequestId) {
+        return;
+      }
+      console.error("❌ preview-page: Failed to load portfolio playable:", error);
+      this.uploadedFileName = "";
+      this.portfolioPlayableData = null;
+      this.portfolioProjectTitle = null;
+      this.portfolioLoadError = error instanceof Error
+        ? error.message
+        : "Failed to load the playable from the portfolio.";
+    } finally {
+      if (requestId === this.portfolioLoadRequestId) {
+        this.isLoadingPortfolioPlayable = false;
+        this.requestUpdate();
+      }
+    }
+  }
+
+  // Lock UI moved into PlayablePreviewer component
+
+  handlePopState = () => {
+    // Handle back/forward navigation
+    if (this.hasUnsavedChanges) return;
+    
+    // For now, just clear the preview state on navigation
+    this.isEncoded = false;
+    this.decodedUrl = "";
+    this.requestUpdate();
+  }
+
+  private moveToPreviewInputState() {
+    window.history.replaceState({}, "", `${window.location.pathname}#preview`);
+  }
+
+  private getUrlFromQuery(): string | null {
+    const rawQueryValue = this.encodedUrl?.trim();
+    if (!rawQueryValue) {
+      return null;
+    }
+
+    const decodedQueryValue = this.previewService.decodeUrl(rawQueryValue).trim();
+    if (/^https?:\/\//i.test(decodedQueryValue)) {
+      return decodedQueryValue;
+    }
+
+    const plainQueryValue = decodeURIComponent(rawQueryValue).trim();
+    if (/^https?:\/\//i.test(plainQueryValue)) {
+      return plainQueryValue;
+    }
+
+    if (/^https?:\/\//i.test(rawQueryValue)) {
+      return rawQueryValue;
+    }
+
+    return null;
+  }
+
+  private rememberRecentUrl(url: string) {
+    const normalizedUrl = url.trim();
+    if (!normalizedUrl) {
+      return;
+    }
+
+    this.recentUrls = [normalizedUrl, ...this.recentUrls.filter(item => item !== normalizedUrl)].slice(0, 5);
+    localStorage.setItem("preview-recent-urls", JSON.stringify(this.recentUrls));
+  }
+
+  private resetLoadedSourceState() {
+    this.previewService.clearUploadedContent();
+    this.previewService.setUploadedFileName(null);
+    this.previewService.setPortfolioPlayableId(null);
+    this.uploadedFileName = "";
+    this.portfolioPlayableId = null;
+    this.portfolioPlayableData = null;
+    this.portfolioProjectTitle = null;
+    this.portfolioLoadError = "";
+    this.uploadError = "";
+    this.urlLoadError = "";
+    this.isEncoded = false;
+    this.decodedUrl = "";
+  }
+
+  private async loadPlayableFromUrl(rawUrl: string, options?: { fromEncodedQuery?: boolean }) {
+    const nextUrl = rawUrl.trim();
+    if (!nextUrl) {
+      this.urlLoadError = "Paste a direct HTML or ZIP URL to load a playable.";
+      this.requestUpdate();
+      return;
+    }
+
+    const requestId = ++this.urlLoadRequestId;
+    this.isLoadingUrl = true;
+    this.urlLoadError = "";
+    this.uploadError = "";
+    this.uploadedFileName = "";
+    this.portfolioPlayableId = null;
+    this.portfolioPlayableData = null;
+    this.portfolioProjectTitle = null;
+    this.portfolioLoadError = "";
+    this.previewService.setPortfolioPlayableId(null);
+    this.isEncoded = !!options?.fromEncodedQuery;
+    this.decodedUrl = nextUrl;
+    this.urlInput = nextUrl;
+    this.moveToPreviewInputState();
+    this.requestUpdate();
+
+    try {
+      const result = await this.previewService.loadPlayableFromUrl(nextUrl);
+      if (requestId !== this.urlLoadRequestId) {
+        return;
+      }
+
+      this.uploadedFileName = result.fileName;
+      this.previewService.setUploadedFileName(result.fileName);
+      this.rememberRecentUrl(nextUrl);
+    } catch (error) {
+      if (requestId !== this.urlLoadRequestId) {
+        return;
+      }
+
+      this.urlLoadError = error instanceof Error
+        ? error.message
+        : "Failed to load the playable from the provided URL.";
+      this.isEncoded = false;
+      this.decodedUrl = "";
+    } finally {
+      if (requestId === this.urlLoadRequestId) {
+        this.isLoadingUrl = false;
+        this.requestUpdate();
+      }
+    }
+  }
+
+  private handleUrlInput(event: Event) {
+    this.urlInput = (event.target as HTMLInputElement).value;
+  }
+
+  private handleUrlInputKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+    void this.loadPlayableFromUrl(this.urlInput);
+  }
+
+  private handleRecentUrlClick(url: string) {
+    this.urlInput = url;
+    void this.loadPlayableFromUrl(url);
+  }
+
+  async handleFileUpload(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (!file) return;
+
+    this.isUploading = true;
+    this.uploadError = "";
+    this.urlLoadError = "";
+    this.uploadedFileName = "";
+    this.portfolioPlayableId = null;
+    
+    // Clear any existing state when uploading
+    this.isEncoded = false;
+    this.decodedUrl = "";
+    
+    this.moveToPreviewInputState();
+    
+    this.requestUpdate();
+
+    try {
+      // Route by extension: ZIP archives are handled by handleZipUpload
+      if (file.name.toLowerCase().endsWith('.zip')) {
+        await this.previewService.handleZipUpload(file);
+      } else {
+        await this.previewService.handleFileUpload(file);
+      }
+      this.uploadedFileName = file.name;
+      this.previewService.setUploadedFileName(file.name);
+      this.previewService.setPortfolioPlayableId(null);
+    } catch (err: any) {
+      this.uploadError = err.message || String(err);
+    }
+
+    this.isUploading = false;
+    this.requestUpdate();
+    
+    // Clear the input so the same file can be selected again
+    input.value = '';
+  }
+
+  clearUploadedContent() {
+    this.resetLoadedSourceState();
+    this.urlInput = "";
+    this.requestUpdate();
+  }
+
+  // UI handler: toggle lock state and inform PreviewService
+  toggleScreenLock() {
+  // Lock UI moved into PlayablePreviewer component
+  }
+
+  private triggerSaveToLibrary() {
+    const previewer = this.querySelector('playable-previewer') as any;
+    if (previewer && typeof previewer.handleSaveToLibrary === 'function') {
+      previewer.handleSaveToLibrary();
+    }
+  }
+
+  private async triggerPublishFromPreview() {
+    if (!this.portfolioPlayableData) {
+      return;
+    }
+
+    if (!this.portfolioPlayableData.content) {
+      alert("Publish currently supports HTML portfolio items only.");
+      return;
+    }
+
+    const project = this.portfolioPlayableData.project
+      ? await this.portfolioService.getProjectById(this.portfolioPlayableData.project)
+      : null;
+
+    this.publishService.setLaunchContext({
+      playableTitle: this.portfolioPlayableData.title || this.portfolioPlayableData.name,
+      fileName: this.portfolioPlayableData.originalName || `${this.portfolioPlayableData.name}.html`,
+      htmlContent: this.portfolioPlayableData.content,
+      googlePlayUrl: project?.googlePlay || "",
+      appStoreUrl: project?.appStore || "",
+      projectId: this.portfolioPlayableData.project || "",
+      projectName: project?.name || "",
+      sourceLabel: `Preview: ${this.portfolioPlayableData.title || this.portfolioPlayableData.name}`,
+    });
+
+    navigate("/publish");
+  }
+
+  private async _copyPageLink() {
+    const url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+      this._sharePageCopied = true;
+      this.requestUpdate();
+      setTimeout(() => { this._sharePageCopied = false; this.requestUpdate(); }, 2000);
+    } catch {
+      // Clipboard not available
+    }
+  }
+
+  private async _openShareModal() {
+    const storageName = this.portfolioPlayableData?.fileStorageName;
+    if (!storageName) return;
+
+    this._shareModalOpen = true;
+    this._shareLoading = true;
+    this._shareError = '';
+    this._shareUrl = null;
+    this._qrDataUrl = null;
+    this.requestUpdate();
+
+    try {
+      const url = await this.apiClient.generateShareLink(storageName);
+      this._shareUrl = url;
+      this._qrDataUrl = await QRCode.toDataURL(url, { width: 256, margin: 2 });
+    } catch (err: any) {
+      this._shareError = err?.message || 'Failed to generate link';
+    } finally {
+      this._shareLoading = false;
+      this.requestUpdate();
+    }
+  }
+
+  private _closeShareModal() {
+    this._shareModalOpen = false;
+    this._shareCopied = false;
+    this.requestUpdate();
+  }
+
+  private async _copyShareLink() {
+    if (!this._shareUrl) return;
+    try {
+      await navigator.clipboard.writeText(this._shareUrl);
+      this._shareCopied = true;
+      this.requestUpdate();
+      setTimeout(() => { this._shareCopied = false; this.requestUpdate(); }, 2000);
+    } catch {
+      // ignore
+    }
+  }
+
+  private _renderShareModal() {
+    if (!this._shareModalOpen) return null;
+    return html`
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click=${(e: Event) => { if (e.target === e.currentTarget) this._closeShareModal(); }}>
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4 flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+              <span class="material-icons-outlined text-indigo-500">qr_code_2</span>
+              QR Code &amp; Direct Link
+            </h3>
+            <button @click=${() => this._closeShareModal()} class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+              <span class="material-icons-outlined">close</span>
+            </button>
+          </div>
+
+          ${this._shareLoading ? html`
+            <div class="flex flex-col items-center gap-3 py-6">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-indigo-500 border-t-transparent"></div>
+              <p class="text-sm text-slate-500 dark:text-slate-400">Generating link...</p>
+            </div>
+          ` : this._shareError ? html`
+            <div class="p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded text-sm">${this._shareError}</div>
+          ` : html`
+            <p class="text-xs text-amber-600 dark:text-amber-400 flex items-start gap-1.5">
+              <span class="material-icons-outlined shrink-0" style="font-size:14px;margin-top:1px">schedule</span>
+              This link is valid for <strong>24 hours</strong>. Great for testing on real devices.
+            </p>
+            ${this._qrDataUrl ? html`
+              <div class="flex justify-center">
+                <img src="${this._qrDataUrl}" alt="QR Code" class="rounded-lg border border-slate-200 dark:border-slate-700" width="200" height="200" />
+              </div>
+            ` : ''}
+            <div class="flex items-center gap-2 mt-1">
+              <input
+                type="text"
+                readonly
+                .value="${this._shareUrl || ''}"
+                class="flex-1 text-xs border border-slate-200 dark:border-slate-700 rounded px-3 py-2 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-mono truncate focus:outline-none"
+                @click=${(e: Event) => (e.target as HTMLInputElement).select()}
+              />
+              <button
+                @click=${() => this._copyShareLink()}
+                class="px-3 py-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-xs flex items-center gap-1 shrink-0"
+              >
+                <span class="material-icons-outlined" style="font-size:15px">${this._shareCopied ? 'check' : 'content_copy'}</span>
+                ${this._shareCopied ? 'Copied!' : 'Copy'}
+              </button>
+            </div>
+          `}
+        </div>
+      </div>
+    `;
+  }
+
+  render() {
+    if (!BACKEND_FEATURES_ENABLED && this.routeParams?.[0]) {
+      // /preview/<id> links resolved playables through the backend library, which is gone.
+      return html`<backend-disabled-notice></backend-disabled-notice>`;
+    }
+
+    const hasUploadedContent = this.previewService.getUploadedFileInfo().hasContent;
+    const isFromPortfolio = this.portfolioPlayableId !== null;
+    const hasContent = hasUploadedContent || !!this.uploadedFileName;
+    const showPortfolioLoadingState = isFromPortfolio && this.isLoadingPortfolioPlayable;
+    const showPortfolioErrorState = isFromPortfolio && !!this.portfolioLoadError && !hasContent;
+    const showInputSections = !hasContent && !showPortfolioLoadingState && !showPortfolioErrorState;
+    
+    console.log(`🎨 preview-page render: isEncoded=${this.isEncoded}, decodedUrl='${this.decodedUrl.substring(0, 50)}...', hasUploadedContent=${hasUploadedContent}, uploadedFileName='${this.uploadedFileName}'`);
+
+    return html`
+      <div class="${hasContent ? 'w-full flex flex-col md:h-[calc(100vh-4rem)]' : 'max-w-7xl mx-auto'}">
+        <header class="flex shrink-0 items-center justify-between ${hasContent ? 'pb-3 mb-3' : 'pb-6 mb-6'} border-b border-slate-200 dark:border-slate-800">
+          <h1 class="${hasContent ? 'text-xl' : 'text-2xl'} font-bold text-slate-900 dark:text-white">Playable Ad Preview</h1>
+          
+          <div class="flex items-center gap-4">
+            ${hasContent && !isFromPortfolio
+              ? html`
+                  ${BACKEND_FEATURES_ENABLED
+                    ? html`
+                        <button
+                          @click=${this.triggerSaveToLibrary}
+                          class="px-6 py-2.5 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors flex items-center gap-2"
+                        >
+                          <span class="material-icons-outlined">save</span>
+                          Save to Library
+                        </button>
+                      `
+                    : null}
+                  <button
+                    @click=${() => {
+                      this.resetLoadedSourceState();
+                      this.urlInput = "";
+                      this.moveToPreviewInputState();
+                      this.requestUpdate();
+                    }}
+                    class="px-6 py-2.5 rounded bg-red-500 text-white font-semibold hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
+                  >
+                    Load New Content
+                  </button>
+                `
+              : hasContent && isFromPortfolio
+              ? html`
+                  ${this.isAuthenticated && this.portfolioPlayableData?.content
+                    ? html`
+                        <button
+                          @click=${() => this.triggerPublishFromPreview()}
+                          class="px-6 py-2.5 rounded bg-primary text-white font-semibold hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors flex items-center gap-2"
+                        >
+                          <span class="material-icons-outlined">publish</span>
+                          Publish for Ad networks
+                        </button>
+                      `
+                    : null}
+                  <button
+                    @click=${() => {
+                      this.resetLoadedSourceState();
+                      this.urlInput = "";
+                      this.moveToPreviewInputState();
+                      this.requestUpdate();
+                    }}
+                    class="px-6 py-2.5 rounded bg-red-500 text-white font-semibold hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
+                  >
+                    Load New Content
+                  </button>
+                `
+              : null}
+          </div>
+        </header>
+
+
+        ${isFromPortfolio && this.portfolioPlayableData
+          ? html`
+              <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div class="space-y-2">
+                  <div class="flex items-start justify-between gap-4">
+                    <div>
+                      <h2 class="text-lg font-semibold text-slate-900 dark:text-white">${this.portfolioPlayableData.title || this.portfolioPlayableData.name}</h2>
+                    </div>
+                    <!-- Share / QR / Direct Link buttons -->
+                    <div class="flex items-center gap-2 shrink-0">
+                      <button
+                        @click=${() => this._copyPageLink()}
+                        title="Copy link to this preview page"
+                        class="w-9 h-9 flex items-center justify-center rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative"
+                      >
+                        <span class="material-icons-outlined" style="font-size:18px">${this._sharePageCopied ? 'check' : 'share'}</span>
+                        ${this._sharePageCopied ? html`<span class="absolute -top-7 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-0.5 rounded whitespace-nowrap">Copied!</span>` : ''}
+                      </button>
+                      ${this.portfolioPlayableData.fileStorageName ? html`
+                        <button
+                          @click=${() => this._openShareModal()}
+                          title="Generate QR code &amp; direct link"
+                          class="w-9 h-9 flex items-center justify-center rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                        >
+                          <span class="material-icons-outlined" style="font-size:18px">qr_code_2</span>
+                        </button>
+                      ` : html`
+                        <button
+                          disabled
+                          title="Save to Library first to generate a shareable link"
+                          class="w-9 h-9 flex items-center justify-center rounded border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-300 dark:text-slate-600 cursor-not-allowed"
+                        >
+                          <span class="material-icons-outlined" style="font-size:18px">qr_code_2</span>
+                        </button>
+                      `}
+                    </div>
+                  </div>
+                  ${this.portfolioPlayableData.details ? html`
+                    <p class="text-slate-600 dark:text-slate-400 text-sm">${this.portfolioPlayableData.details}</p>
+                  ` : ''}
+                  ${this.portfolioProjectTitle ? html`
+                    <div class="text-sm">
+                      <span class="font-medium text-slate-700 dark:text-slate-300">Project:</span>
+                      <span class="text-slate-600 dark:text-slate-400 ml-2">${this.portfolioProjectTitle}</span>
+                    </div>
+                  ` : ''}
+                  ${this.portfolioPlayableData.tags && this.portfolioPlayableData.tags.length > 0 ? html`
+                    <div class="text-sm">
+                      <span class="font-medium text-slate-700 dark:text-slate-300 block mb-1">Tags:</span>
+                      <div class="flex flex-wrap gap-2">
+                        ${this.portfolioPlayableData.tags.map((tag: string) => 
+                          html`<span class="inline-block px-2 py-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded text-xs">${tag}</span>`
+                        )}
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `
+          : ''}
+
+        ${showPortfolioLoadingState
+          ? html`
+              <div class="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
+                <div class="flex items-start gap-4">
+                  <div class="mt-1 h-6 w-6 shrink-0 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+                  <div>
+                    <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Loading playable from portfolio...</h2>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">
+                      We found a direct preview link and are fetching the playable file from the backend now.
+                    </p>
+                    ${this.portfolioPlayableId
+                      ? html`
+                          <p class="mt-2 text-xs text-slate-500 dark:text-slate-400 font-mono break-all">
+                            Preview ID: ${this.portfolioPlayableId}
+                          </p>
+                        `
+                      : null}
+                  </div>
+                </div>
+              </div>
+            `
+          : null}
+
+        ${showPortfolioErrorState
+          ? html`
+              <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-6 dark:border-red-800 dark:bg-red-900/20">
+                <h2 class="text-lg font-semibold text-red-700 dark:text-red-300">Could not open this portfolio playable</h2>
+                <p class="mt-2 text-sm text-red-600 dark:text-red-400">${this.portfolioLoadError}</p>
+                <div class="mt-4">
+                  <button
+                    @click=${() => {
+                      this.portfolioPlayableId = null;
+                      this.portfolioPlayableData = null;
+                      this.portfolioProjectTitle = null;
+                      this.portfolioLoadError = "";
+                      this.previewService.setPortfolioPlayableId(null);
+                      this.moveToPreviewInputState();
+                      this.requestUpdate();
+                    }}
+                    class="px-4 py-2 rounded bg-white text-red-600 border border-red-300 font-medium hover:bg-red-50 dark:bg-slate-900 dark:border-red-700 dark:text-red-300 dark:hover:bg-red-900/10 transition-colors"
+                  >
+                    Open Manual Upload Instead
+                  </button>
+                </div>
+              </div>
+            `
+          : null}
+        
+        ${showInputSections
+          ? html`
+              <div class="space-y-8">
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <p class="text-slate-600 dark:text-slate-400 mb-4">
+                    Upload HTML files or ZIP archives, or paste a direct HTML/ZIP URL, to preview playable ads on different devices and orientations.
+                  </p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <span class="material-icons-outlined">link</span>
+                    Load From URL
+                  </h3>
+
+                  <div class="flex flex-col gap-3">
+                    <div class="flex flex-col gap-3 lg:flex-row">
+                      <input
+                        type="url"
+                        .value=${this.urlInput}
+                        @input=${this.handleUrlInput}
+                        @keydown=${this.handleUrlInputKeydown}
+                        placeholder="https://example.com/playable/index.html or https://example.com/playable.zip"
+                        class="flex-1 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3 text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                        ?disabled=${this.isLoadingUrl || this.isUploading}
+                      />
+                      <button
+                        @click=${() => this.loadPlayableFromUrl(this.urlInput)}
+                        class="px-5 py-3 rounded bg-primary text-white font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+                        ?disabled=${this.isLoadingUrl || this.isUploading}
+                      >
+                        ${this.isLoadingUrl ? 'Loading...' : 'Load Playable'}
+                      </button>
+                    </div>
+
+                    ${this.isLoadingUrl ? html`
+                      <div class="flex items-center gap-2 text-primary text-sm">
+                        <div class="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent"></div>
+                        <span>Fetching remote playable and preparing preview...</span>
+                      </div>
+                    ` : ''}
+
+                    ${this.urlLoadError ? html`
+                      <div class="p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded text-sm">
+                        ${this.urlLoadError}
+                      </div>
+                    ` : ''}
+
+                    <div class="text-sm text-slate-500 dark:text-slate-400 space-y-1">
+                      <p>• Supported sources: direct .html, .htm, .zip URLs</p>
+                      <p>• The remote server must allow cross-origin access from the browser</p>
+                      <p>• Once loaded, validation, screenshots, and gameplay recording work through the regular preview flow</p>
+                    </div>
+
+                    ${this.recentUrls.length > 0 ? html`
+                      <div class="pt-2 border-t border-slate-200 dark:border-slate-800">
+                        <p class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-2">Recent URLs</p>
+                        <div class="flex flex-wrap gap-2">
+                          ${this.recentUrls.map(url => html`
+                            <button
+                              @click=${() => this.handleRecentUrlClick(url)}
+                              class="max-w-full rounded-full border border-slate-300 dark:border-slate-700 px-3 py-1.5 text-left text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors truncate"
+                              title=${url}
+                            >
+                              ${url}
+                            </button>
+                          `)}
+                        </div>
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <span class="material-icons-outlined">upload_file</span>
+                    Upload HTML File
+                  </h3>
+                  
+                  <div class="mb-4">
+                    <label class="block w-full cursor-pointer">
+                      <input 
+                        type="file" 
+                        accept=".html,.htm,.zip" 
+                        @change="${this.handleFileUpload}"
+                        class="block w-full text-sm text-slate-500 dark:text-slate-400
+                          file:mr-4 file:py-2 file:px-4
+                          file:rounded-full file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-primary file:text-white
+                          hover:file:bg-blue-600
+                          cursor-pointer"
+                        ?disabled="${this.isUploading}"
+                      />
+                    </label>
+                    
+                    ${this.isUploading ? html`
+                      <div class="mt-2 flex items-center gap-2 text-primary">
+                        <div class="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent"></div>
+                        <span class="text-sm">Uploading...</span>
+                      </div>
+                    ` : ''}
+                  </div>
+                  
+                  ${this.uploadError ? html`
+                    <div class="mb-4 p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded text-sm">
+                      ${this.uploadError}
+                    </div>
+                  ` : ''}
+                  
+                  <div class="text-sm text-slate-500 dark:text-slate-400 space-y-1">
+                    <p>• Supported formats: .html, .htm, .zip</p>
+                    <p>• Maximum file size: 10MB</p>
+                    <p>• Files are processed locally</p>
+                  </div>
+                </div>
+              </div>
+
+              <recordings-list-section></recordings-list-section>
+              </div>
+            `
+          : null}
+          
+        <div class="${hasContent ? 'min-h-0 flex-1' : 'mt-6'}">
+          ${(() => {
+            const hasUploadedContent = this.previewService.getUploadedFileInfo().hasContent;
+            if (!showPortfolioLoadingState && (hasUploadedContent || this.uploadedFileName)) {
+              console.log(`✅ preview-page: Rendering previewer with content`);
+              return html`<playable-previewer class="block h-full" .fileName=${this.uploadedFileName}></playable-previewer>`;
+            } else {
+              console.log(`⛔ preview-page: Not rendering previewer (no content)`);
+              return null;
+            }
+          })()}
+        </div>
+        ${this._renderShareModal()}
+      </div>
+    `;
+  }
+}

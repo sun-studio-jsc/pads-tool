@@ -1,0 +1,190 @@
+slug,name,CSS viewport width,CSS viewport height,Device pixel ratio,Screen resolution width,Screen resolution height,Screen diagonal,Pixel density,Aspect ratio,Operating system,User agent,Brand,Category,Release year
+apple-imac-24-inch-2021,"iMac 24"" (2021)",2048 px,1152 px,2,4096 px,2304 px,9.3 in,254 ppi,16:9,macOS 15.3,"Mozilla/5.0 (Macintosh; Intel Mac OS X 15_3_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.114 Safari/537.36",Apple,computer,2021
+apple-ipad-11-2025,"Apple iPad A16 11"" (2025)",820 px,1180 px,2,1640 px,2360 px,11 in,264 ppi,13:9,iPadOS 27.0,"Mozilla/5.0 (iPad; CPU OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,tablet,2025
+apple-ipad-air-4,Apple iPad Air 4 (2020),820 px,1180 px,2,1640 px,2360 px,9.7 in,296 ppi,13:9,iPadOS 14.0,"Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,tablet,2020
+apple-ipad-mini,Apple iPad Mini (6th Gen) (2021),768 px,1024 px,2,1536 px,2048 px,7.9 in,324 ppi,4:3,iPadOS 14.0,"Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,tablet,2021
+apple-ipad-pro-11-2018,"Apple iPad PRO 11"" (3rd Gen) (2018)",834 px,1194 px,2,1668 px,2388 px,11 in,265 ppi,13:9,iPadOS 14.0,"Mozilla/5.0 (iPad; CPU OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,tablet,2018
+apple-iphone-11,Apple iPhone 11,414 px,896 px,2,828 px,1792 px,6.1 in,326 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2019
+apple-iphone-11-pro,Apple iPhone 11 Pro,375 px,812 px,3,1125 px,2436 px,5.8 in,458 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2019
+apple-iphone-11-pro-max,Apple iPhone 11 Pro Max,414 px,896 px,3,1242 px,2688 px,6.5 in,458 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2019
+apple-iphone-12,Apple iPhone 12,390 px,844 px,3,1170 px,2532 px,6.1 in,457 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2020
+apple-iphone-12-mini,Apple iPhone 12 Mini,360 px,780 px,3,1080 px,2340 px,5.4 in,477 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2020
+apple-iphone-12-pro,Apple iPhone 12 Pro,390 px,844 px,3,1170 px,2532 px,6.1 in,460 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2020
+apple-iphone-12-pro-max,Apple iPhone 12 Pro Max,428 px,926 px,3,1284 px,2778 px,6.7 in,458 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2020
+apple-iphone-13-2021,Apple iPhone 13 (2021),390 px,844 px,3,1170 px,2532 px,6.1 in,457 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2021
+apple-iphone-13-mini-2021,Apple iPhone 13 Mini (2021),375 px,812 px,3,1080 px,2340 px,5.4 in,477 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2021
+apple-iphone-13-pro-2021,Apple iPhone 13 PRO (2021),390 px,844 px,3,1170 px,2532 px,6.1 in,457 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2021
+apple-iphone-13-pro-max-2021,Apple iPhone 13 PRO MAX (2021),428 px,926 px,3,1284 px,2778 px,6.7 in,457 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2021
+apple-iphone-14-2022,Apple iPhone 14 (2022),390 px,844 px,3,1170 px,2532 px,6.1 in,457 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2022
+apple-iphone-14-max-2022,Apple iPhone 14 Plus (2022),428 px,926 px,3,1284 px,2778 px,6.7 in,457 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2022
+apple-iphone-14-pro-2022,Apple iPhone 14 PRO (2022),390 px,844 px,3,1179 px,2556 px,6.1 in,461 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2022
+apple-iphone-14-pro-max-2022,Apple iPhone 14 PRO MAX (2022),428 px,928 px,3,1290 px,2796 px,6.7 in,460 ppi,19.5:9,iOS 16.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2022
+apple-iphone-15-2023,Apple iPhone 15 (2023),393 px,852 px,3,1179 px,2556 px,6.1 in,461 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2023
+apple-iphone-15-plus-2023,Apple iPhone 15 Plus (2023),430 px,932 px,3,1290 px,2796 px,6.7 in,460 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2023
+apple-iphone-15-pro-2023,Apple iPhone 15 PRO (2023),393 px,852 px,3,1179 px,2556 px,6.1 in,461 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2023
+apple-iphone-15-pro-max-2023,Apple iPhone 15 PRO MAX (2023),430 px,932 px,3,1290 px,2796 px,6.7 in,460 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2023
+apple-iphone-16-2024,Apple iPhone 16 (2024),393 px,852 px,3,1179 px,2556 px,6.1 in,461 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2024
+apple-iphone-16-plus-2024,Apple iPhone 16 Plus (2024),430 px,932 px,3,1290 px,2796 px,6.7 in,460 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2024
+apple-iphone-16-pro-max-2024,Apple iPhone 16 PRO MAX (2024),440 px,956 px,3,1320 px,2868 px,6.7 in,471 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2024
+apple-iphone-17-2025,Apple iPhone 17 (2025),402 px,874 px,3,1206 px,2622 px,6.3 in,458 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2025
+apple-iphone-17-pro-2025,Apple iPhone 17 PRO (2025),402 px,873 px,3,1206 px,2622 px,6.3 in,458 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2025
+apple-iphone-17-pro-max-2025,Apple iPhone 17 PRO MAX (2025),440 px,956 px,3,1320 px,2868 px,6.9 in,458 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2025
+apple-iphone-18-pro-2026,Apple iPhone 18 PRO (2026),402 px,873 px,3,1206 px,2619 px,6.3 in,460 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2026
+apple-iphone-18-pro-max-2026,Apple iPhone 18 PRO MAX (2026),440 px,956 px,3,1320 px,2868 px,6.9 in,460 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2026
+apple-iphone-5,Apple iPhone 5,320 px,568 px,2,640 px,1136 px,4 in,326 ppi,16:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2012
+apple-iphone-air-2025,Apple iPhone Air (2025),420 px,912 px,3,1260 px,2736 px,6.5 in,463 ppi,19.5:9,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2025
+apple-iphone-duo-folded-2026,Apple iPhone Duo folded (2026),466 px,678 px,3,1398 px,2034 px,5.4 in,460 ppi,14.5:10,iOS 27.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 27_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2026
+apple-iphone-duo-unfolded-2026,Apple iPhone Duo unfolded (2026),890 px,626 px,3,2670 px,1878 px,7.6 in,430 ppi,14.2:10,iOS 27.0,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15",Apple,smartphone,2026
+apple-iphone-se,Apple iPhone SE (2016),320 px,568 px,2,640 px,1136 px,4 in,326 ppi,16:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2016
+apple-iphone-x,Apple iPhone X (2017),375 px,812 px,3,1125 px,2436 px,5.8 in,463 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2017
+apple-iphone-xr,Apple iPhone XR ,414 px,896 px,2,828 px,1792 px,6.1 in,326 ppi,19.5:9,iOS 14.0,"Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",Apple,smartphone,2018
+apple-macbook-air-m5-13-inches-2026,"Apple MacBook Air M5 13"" (2026)",1470 px,956 px,2,2560 px,1664 px,13.6 in,224 ppi,14:9,macOS 26.0,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",Apple,computer,2026
+apple-macbook-neo-2026,"Apple MacBook Neo 13"" (2026)",1204 px,753 px,2,2408 px,1506 px,,,16:10,macOS 26.0,"Mozilla/5.0 (Macintosh; Intel Mac OS X 15_7_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15",Apple,computer,2026
+apple-macbook-pro-16-2021,"Apple MacBook Pro M1 16"" (2021)",1728 px,1117 px,2,3456 px,2234 px,16.2 in,254 ppi,14:9,macOS 15.3,"Mozilla/5.0 (Macintosh; Intel Mac OS X 15_3_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.114 Safari/537.36",Apple,computer,2021
+apple-macbook-pro-m5-touch-16-inches-2026,"Apple MacBook Pro M5 16"" (2026)",1736 px,1133 px,2,3472 px,2266 px,16.3 in,254 ppi,14:9,macOS 27.0,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15",Apple,computer,2026
+apple-studio-display-27-inches-2026,"Apple Studio Display 27"" (2026)",2560 px,1440 px,2,5120 px,2880 px,27 in,218 ppi,16:9,macOS 27.0,"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0 Safari/605.1.15",Apple,computer,2026
+apple-watch-serie-6,Apple Watch Series 6 (40mm),162 px,197 px,2,324 px,394 px,1.57 in,325 ppi,11:9,watchOS 7.0,"atc/1.0 watchOS/8 model/Watch6,2 hwp/t8301 build/18T567 (6; dt:226)",Apple,watch,2020
+dell-22-inch-pc-monitor,"Dell E2222H 22"" Monitor",1920 px,1080 px,1,1920 px,1080 px,21.5 in,102 ppi,16:9,Windows 11.0,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.114 Safari/537.36",Dell,computer,2021
+dell-latitude-14-3420,"Dell Latitude 3420 14""",1440 px,809 px,1,1440 px,809 px,14 in,118 ppi,16:9,Windows 11.0,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.114 Safari/537.36",Dell,computer,2021
+google-pixel-10-2026,Google Pixel 10,412 px,924 px,2.625,1082 px,2426 px,,,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Google Pixel 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2025
+google-pixel-10-pro-2026,Google Pixel 10 PRO,410 px,912 px,3.125,1281 px,2850 px,,,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Google Pixel 10 PRO) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2025
+google-pixel-10-pro-fold-2026,Pixel 10 PRO Fold folded,412 px,901 px,2.625,1080 px,2364 px,6.4 in,408 ppi,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Google Pixel 10 Pro Fold) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2025
+google-pixel-11-pro-2026,Google Pixel 11 PRO,410 px,914 px,3.125,1280 px,2856 px,6.3 in,495 ppi,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Google Pixel 11 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2026
+google-pixel-11-pro-xl-2026,Google Pixel 11 Pro XL,448 px,997 px,3,1344 px,2992 px,6.8 in,486 ppi,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Google Pixel 11 Pro XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2026
+google-pixel-5,Google Pixel 5,393 px,851 px,2.75,1080 px,2340 px,6 in,432 ppi,19.5:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2020
+google-pixel-6-pro,Google Pixel 6 PRO,360 px,780 px,4,1440 px,3120 px,6.7 in,513 ppi,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2021
+google-pixel-8-2024,Google Pixel 8 (2023),412 px,915 px,2.625,1080 px,2400 px,,,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Google,smartphone,2023
+hp-omnibook-5-laptopai-14-inches-2026,"HP OmniBook 5 AI 14"" (2026)",1536 px,960 px,1.25,1920 px,1200 px,14 in,162 ppi,16:10,Windows 11.0,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.114 Safari/537.36",HP,computer,2026
+huawei-p30-pro,Huawei P30 PRO,360 px,780 px,3,1080 px,2340 px,6.5 in,409 ppi,19.5:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; VOG-L29) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Huawei,smartphone,2019
+infinix-hot-70-2026,Infinix Hot 70,360 px,788 px,2,720 px,1576 px,,,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Infinix Hot 70) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Infinix,smartphone,2026
+macbook-air,"Apple MacBook Air 2020 13""",1280 px,800 px,2,2560 px,1600 px,13.3 in,227 ppi,16:10,macOS 11.0,"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15",Apple,computer,2020
+microsoft-surface-duo,Microsoft Surface Duo,1114 px,705 px,2.5,2785 px,1762 px,5.6 in,588 ppi,14:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; Surface Duo) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36 EdgA/131.0.0.0",Microsoft,tablet,2020
+motorola-moto-g87-2026,Motorola Moto G87,424 px,924 px,3,1272 px,2772 px,6.78 in,450 ppi,19.6:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Motorola Moto G87) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Motorola,smartphone,2026
+motorola-razr-70-ultra-2026,Motorola Razr 70 Ultra,412 px,1008 px,3,1236 px,3024 px,,,22:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Motorola Razr 70 Ultra) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Motorola,smartphone,2026
+non-branded-android-smartphone,Generic device on Android,360 px,800 px,2,720 px,1600 px,6.7 in,262 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; Generic Smartphone) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Generic,smartphone,
+oneplus-nord-2,OnePlus Nord 2,412 px,915 px,2.625,1080 px,2400 px,6.4 in,408 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; DN2103) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",OnePlus,smartphone,2021
+oppo-find-x3-pro,OPPO Find X3 PRO,360 px,804 px,4,1440 px,3216 px,6.7 in,526 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; CPH2173) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",OPPO,smartphone,2021
+samsung-galaxy-a12-2021,Samsung Galaxy A12,360 px,800 px,2,720 px,1600 px,,,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-A125M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2020
+samsung-galaxy-a17-2025,Samsung Galaxy A17,412 px,892 px,2.625,1082 px,2342 px,,,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Samsung Galaxy A17) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2025
+samsung-galaxy-fold,Samsung Galaxy Fold (2019),768 px,1076 px,2,1536 px,2152 px,7.3 in,362 ppi,12.5:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-fold2,Samsung Galaxy Z Fold 2 unfolded (2020),884 px,1104 px,2,1768 px,2208 px,7.6 in,373 ppi,11:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-F916B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2020
+samsung-galaxy-note20-ultra,Samsung Galaxy Note20 Ultra,412 px,883 px,3.5,1440 px,3088 px,6.9 in,496 ppi,19.5:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-N986B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2020
+samsung-galaxy-s20,Samsung Galaxy S20,360 px,800 px,3,1440 px,3200 px,6.4 in,563 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-G980F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2020
+samsung-galaxy-s21-ultra,Samsung Galaxy S21 Ultra,360 px,800 px,4,1440 px,3200 px,6.8 in,516 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2021
+samsung-galaxy-s22-2022,Samsung Galaxy S22 (2022),360 px,780 px,3,1080 px,2340 px,6.1 in,422 ppi,19.5:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2022
+samsung-galaxy-s22-plus-2022,Samsung Galaxy S22+ (2022),360 px,780 px,3,1080 px,2340 px,6.6 in,390 ppi,19.5:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-S906B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2022
+samsung-galaxy-s22-ultra-2022,Samsung Galaxy S22 ULTRA (2022),360 px,772 px,4,1440 px,3088 px,6.8 in,501 ppi,19.5:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-S908B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2022
+samsung-galaxy-s24-2024,Samsung Galaxy S24 (2024),360 px,780 px,3,1080 px,2340 px,,,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; SM-S921B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2024
+samsung-galaxy-s24-ultra-2024,Samsung Galaxy S24 Ultra (2024),384 px,832 px,2.8125,1440 px,3120 px,,,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; SM-S928B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2024
+samsung-galaxy-s26-ultra-2026,Galaxy S26 ULTRA,412 px,891 px,4,1648 px,3564 px,,,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; SM-S948B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",Samsung,smartphone,2026
+samsung-galaxy-tab-s7,Samsung Galaxy Tab S7,800 px,1280 px,2,1600 px,2560 px,11 in,274 ppi,16:10,Android 14.0,"Mozilla/5.0 (Linux; Android 14; SM-T970) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.6943.137 Safari/537.36",Samsung,tablet,2020
+samsung-galaxy-z-flip3-2021,Samsung Galaxy Z Flip3 (2021),360 px,880 px,3,1080 px,2640 px,6.7 in,426 ppi,22:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; SM-F711B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Samsung,smartphone,2021
+samsung-galaxy-z-fold8-folded-2026,Samsung Galaxy Z Fold8 folded,416 px,657 px,3,1248 px,1972 px,5.5 in,428 ppi,16:10,Android 17.0,"Mozilla/5.0 (Linux; Android 17; SM-F971B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",Samsung,smartphone,2026
+samsung-galaxy-z-fold8-unfolded-2026,Samsung Galaxy Z Fold8 unfolded,816 px,616 px,3,2448 px,1848 px,7.6 in,403 ppi,4:3,Android 17.0,"Mozilla/5.0 (Linux; Android 17; SM-F971B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",Samsung,smartphone,2026
+samsung-smart-tv,Samsung Smart TV,1920 px,1080 px,1,1920 px,1080 px,,,16:9,Android 12.0,"Mozilla/5.0 (SMART-TV; LINUX; Tizen 5.5) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/5.5 Chrome/69.0.3497.106 TV Safari/537.36",Samsung,computer,
+samsung-smart-tv-neo-qled-4k-55,"Samsung Smart TV NEO QLED 4K 55""",1920 px,1080 px,2,3840 px,2160 px,55 in,408 ppi,16:9,Android 10.0,,Samsung,computer,
+self-service-kiosk,Self service kiosk,1080 px,1920 px,1,1080 px,1920 px,,,16:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; Kiosk) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Safari/537.36",Generic,computer,
+sonoff-nspanel-pro,Sonoff NSPanel Pro,480 px,480 px,1,480 px,480 px,,,9:9,Android 8.1.0,"Mozilla/5.0 (Linux; Android 8.1.0; NSPanel Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Safari/537.36",Sonoff,computer,
+tv-samsung-the-frame-4k-qled-65-inches,"Samsung The Frame 4K QLED 65"" TV (2026)",1920 px,1080 px,2,3840 px,2160 px,65 in,68 ppi,16:9,Tizen 10.0,"Mozilla/5.0 (SMART-TV; LINUX; Tizen 10.0) AppleWebKit/537.36 (KHTML, like Gecko) 130.0.6723.116/10.0 TV Safari/537.36",Samsung,computer,2026
+xiaomi-12-2022,Xiaomi 12,360 px,800 px,3,1080 px,2400 px,6.7 in,393 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; Xiaomi 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2021
+xiaomi-17-2026,Xiaomi 17,406 px,885 px,3,1220 px,2656 px,6.3 in,460 ppi,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Xiaomi 17) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2025
+xiaomi-17-ultra-2026,Xiaomi 17 Ultra,400 px,869 px,3,1200 px,2608 px,6.9 in,416 ppi,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Xiaomi 17 Ultra) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2025
+xiaomi-17t-2026,Xiaomi 17T,423 px,919 px,3,1268 px,2756 px,6.59 in,460 ppi,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Xiaomi 17T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2026
+xiaomi-17t-pro-2026,Xiaomi 17T Pro,427 px,924 px,3,1280 px,2772 px,6.83 in,447 ppi,19.5:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Xiaomi 17T Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2026
+xiaomi-mi-11i,Xiaomi Mi 11i,360 px,800 px,3,1080 px,2400 px,6.7 in,393 ppi,20:9,Android 16.0,"Mozilla/5.0 (Linux; Android 16; M2012K11G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2021
+xiaomi-redmi-note-17-2026,Xiaomi Redmi Note 17,393 px,871 px,2.75,1080 px,2396 px,6.99 in,375 ppi,20:9,Android 17.0,"Mozilla/5.0 (Linux; Android 17; Xiaomi Redmi Note 17) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Xiaomi,smartphone,2026
+zebra-tc78,Zebra TC78,412 px,818 px,2.625,1082 px,2147 px,,,18:9,Android 13.0,"Mozilla/5.0 (Linux; Android 13; TC78) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Zebra,smartphone,2023
+apple-iphone-5c,Apple iPhone 5c,320 px,568 px,2,640 px,1136 px,4 in,326 ppi,16:9,iOS 7,,Apple,smartphone,2013
+apple-iphone-5s,Apple iPhone 5s,320 px,568 px,2,640 px,1136 px,4 in,326 ppi,16:9,iOS 7,,Apple,smartphone,2013
+apple-iphone-6,Apple iPhone 6,375 px,667 px,2,750 px,1334 px,4.7 in,326 ppi,16:9,iOS 8,,Apple,smartphone,2014
+apple-iphone-6s,Apple iPhone 6s,375 px,667 px,2,750 px,1334 px,4.7 in,326 ppi,16:9,iOS 9,,Apple,smartphone,2015
+apple-iphone-6s-plus,Apple iPhone 6s Plus,414 px,736 px,3,1080 px,1920 px,5.5 in,401 ppi,16:9,iOS 9,,Apple,smartphone,2015
+apple-iphone-7,Apple iPhone 7,375 px,667 px,2,750 px,1334 px,4.7 in,326 ppi,16:9,iOS 10.0.1,,Apple,smartphone,2016
+apple-iphone-7-plus,Apple iPhone 7 Plus,414 px,736 px,3,1080 px,1920 px,5.5 in,401 ppi,16:9,iOS 10.0.1,,Apple,smartphone,2016
+apple-iphone-8,Apple iPhone 8,375 px,667 px,2,750 px,1334 px,4.7 in,326 ppi,16:9,iOS 11,,Apple,smartphone,2017
+apple-iphone-8-plus,Apple iPhone 8 Plus,414 px,736 px,3,1080 px,1920 px,5.5 in,401 ppi,16:9,iOS 11,,Apple,smartphone,2017
+apple-iphone-se-2020,Apple iPhone SE (2020),375 px,667 px,2,750 px,1334 px,4.7 in,326 ppi,16:9,iOS 13.0,,Apple,smartphone,2020
+apple-iphone-xs-max,Apple iPhone XS Max ,414 px,896 px,3,1242 px,2688 px,6.5 in,458 ppi,19.5:9,iOS 12,,Apple,smartphone,2018
+google-pixel,Google Pixel,411 px,731 px,2.6,1080 px,1920 px,5 in,441 ppi,16:9,Android 7.1,,Google,smartphone,2016
+google-pixel-2,Google Pixel 2,412 px,732 px,2.625,1080 px,1920 px,5 in,441 ppi,16:9,Android 8.0,,Google,smartphone,2017
+google-pixel-2-xl,Google Pixel 2 XL,412 px,823 px,3.5,1440 px,2880 px,6 in,538 ppi,18:9,Android 8.0,,Google,smartphone,2017
+google-pixel-3,Google Pixel 3,393 px,786 px,2.75,1080 px,2160 px,5.5 in,443 ppi,18:9,Android 9.0,,Google,smartphone,2018
+google-pixel-3-xl,Google Pixel 3 XL,412 px,846 px,3.5,1440 px,2960 px,6.3 in,523 ppi,18.5:9,Android 9.0,,Google,smartphone,2018
+google-pixel-3a,Google Pixel 3a,393 px,808 px,2.75,1080 px,2220 px,5.6 in,441 ppi,18.5:9,Android 9.0,,Google,smartphone,2019
+google-pixel-3a-xl,Google Pixel 3a XL,412 px,823 px,2.625,1080 px,2160 px,6 in,402 ppi,18:9,Android 9.0,,Google,smartphone,2019
+google-pixel-4,Google Pixel 4,393 px,830 px,2.75,1080 px,2280 px,5.7 in,444 ppi,19:9,Android 10.0,,Google,smartphone,2019
+google-pixel-4-xl,Google Pixel 4 XL,412 px,869 px,3.5,1440 px,3040 px,6.3 in,537 ppi,19:9,Android 10,,Google,smartphone,2019
+google-pixel-4a,Google Pixel 4a,393 px,851 px,2.75,1080 px,2340 px,5.8 in,443 ppi,19.5:9,Android 10.0,,Google,smartphone,2020
+google-pixel-xl,Google Pixel XL,412 px,732 px,3.5,1440 px,2560 px,5.5 in,534 ppi,16:9,Android 7.1,,Google,smartphone,2016
+honor-6x,Honor 6X,360 px,640 px,3,1080 px,1920 px,5.5 in,403 ppi,16:9,Android 6.0,,Honor,smartphone,2016
+honor-7x,Honor 7X,360 px,720 px,3,1080 px,2160 px,5.9 in,407 ppi,18:9,Android 7.0,,Honor,smartphone,2017
+honor-8x,Honor 8X,360 px,780 px,3,1080 px,2340 px,6.5 in,397 ppi,19.5:9,Android 8.1,,Honor,smartphone,2018
+honor-9x,Honor 9X,360 px,780 px,3,1080 px,2340 px,6.6 in,391 ppi,19.5:9,Android 9.0,,Honor,smartphone,2019
+htc-desire-10-lifestyle,HTC Desire 10 Lifestyle,360 px,640 px,2,720 px,1280 px,5.5 in,267 ppi,16:9,Android 6.0,,HTC,smartphone,2016
+htc-desire-628,HTC Desire 628,360 px,640 px,2,720 px,1280 px,5 in,294 ppi,16:9,Android 5.1,,HTC,smartphone,2016
+huawei-mate-10-lite,Huawei Mate 10 Lite,360 px,720 px,3,1080 px,2160 px,5.9 in,409 ppi,18:9,Android 7.0,,Huawei,smartphone,2017
+huawei-mate-20-lite,Huawei Mate 20 Lite,360 px,780 px,3,1080 px,2340 px,6.3 in,409 ppi,19.5:9,Android 8.1,,Huawei,smartphone,2018
+huawei-mate-20-pro,Huawei Mate 20 Pro,360 px,780 px,4,1440 px,3120 px,6.4 in,538 ppi,19.5:9,Android 9.0,,Huawei,smartphone,2018
+huawei-mate-30,Huawei Mate 30,360 px,780 px,3,1080 px,2340 px,6.6 in,389 ppi,19.5:9,Android 10.0,,Huawei,smartphone,2019
+huawei-mate-30-pro,Huawei Mate 30 Pro,392 px,800 px,3,1176 px,2400 px,6.5 in,409 ppi,18.5:9,Android 10.0,,Huawei,smartphone,2019
+huawei-nova-7i,Huawei Nova 7i,360 px,770 px,3,1080 px,2310 px,6.4 in,398 ppi,19.5:9,Android 10.0,,Huawei,smartphone,2020
+huawei-y9-prime,Huawei Y9 Prime,360 px,780 px,3,1080 px,2340 px,6.6 in,391 ppi,19.5:9,Android 9.0,,Huawei,smartphone,2019
+huawei-y9s,Huawei Y9s,360 px,780 px,3,1080 px,2340 px,6.6 in,391 ppi,19.5:9,Android 9.0,,Huawei,smartphone,2019
+lg-g5,LG G5,360 px,640 px,4,1440 px,2560 px,5.3 in,554 ppi,16:9,Android 6.0.1,,LG,smartphone,2016
+motorola-moto-e5-plus,Motorola Moto E5 Plus,360 px,720 px,2,720 px,1440 px,6 in,268 ppi,18:9,Android 8.0,,Motorola,smartphone,2018
+oneplus-6,OnePlus 6,412 px,869 px,2.625,1080 px,2280 px,6.3 in,402 ppi,19:9,Android 8.1,,OnePlus,smartphone,2018
+oneplus-6t,OnePlus 6T,412 px,892 px,2.625,1080 px,2340 px,6.4 in,402 ppi,19.5:9,Android 9.0,,OnePlus,smartphone,2018
+oneplus-7,OnePlus 7,412 px,892 px,2.625,1080 px,2340 px,6.4 in,402 ppi,19.5:9,Android 9.0,,OnePlus,smartphone,2019
+oneplus-7-pro,OnePlus 7 Pro,412 px,892 px,3.5,1440 px,3120 px,6.7 in,516 ppi,19.5:9,Android 9.0,,OnePlus,smartphone,2019
+oneplus-7t,OnePlus 7T,412 px,914 px,2.625,1080 px,2400 px,6.6 in,402 ppi,20:9,Android 10.0,,OnePlus,smartphone,2019
+oneplus-7t-pro,OnePlus 7T Pro,412 px,892 px,3.5,1440 px,3120 px,6.7 in,516 ppi,19.5:9,Android 10.0,,OnePlus,smartphone,2019
+oneplus-8,OnePlus 8,412 px,915 px,2.625,1080 px,2400 px,6.6 in,402 ppi,20:9,Android 10.0,,OnePlus,smartphone,2020
+oneplus-8-pro,OnePlus 8 Pro,412 px,906 px,3.5,1440 px,3168 px,6.8 in,513 ppi,20:9,Android 10.0,,OnePlus,smartphone,2020
+oneplus-8t,OnePlus 8T,412 px,914 px,2.625,1080 px,2400 px,6.6 in,402 ppi,20:9,Android 11.0,,OnePlus,smartphone,2020
+oneplus-nord,OnePlus Nord,412 px,915 px,2.625,1080 px,2400 px,6.4 in,408 ppi,20:9,Android 10.0,,OnePlus,smartphone,2020
+samsung-a50,Samsung A50,412 px,892 px,2.625,1080 px,2340 px,6.4 in,403 ppi,19.5:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-a30,Samsung Galaxy A30,412 px,892 px,2.625,1080 px,2340 px,6.4 in,403 ppi,19.5:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-a50s,Samsung Galaxy A50s,412 px,892 px,2.625,1080 px,2340 px,6.4 in,403 ppi,19.5:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-a51,Samsung Galaxy A51,412 px,914 px,2.625,1080 px,2400 px,6.5 in,405 ppi,20:9,Android 10.0,,Samsung,smartphone,2019
+samsung-galaxy-a6s,Samsung Galaxy A6s ,360 px,720 px,3,1080 px,2160 px,6 in,402 ppi,18:9,Android 8.0,,Samsung,smartphone,2018
+samsung-galaxy-a70s,Samsung Galaxy A70s,412 px,914 px,2.625,1080 px,2400 px,6.7 in,393 ppi,20:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-a71,Samsung Galaxy A71,412 px,914 px,2.625,1080 px,2400 px,6.7 in,393 ppi,20:9,Android 10.0,,Samsung,smartphone,2020
+samsung-galaxy-j4,Samsung Galaxy J4,360 px,640 px,2,720 px,1280 px,5.5 in,267 ppi,16:9,Android 8.0,,Samsung,smartphone,2018
+samsung-galaxy-j5,Samsung Galaxy J5,360 px,640 px,2,720 px,1280 px,5 in,294 ppi,16:9,Android 5.1,,Samsung,smartphone,2015
+samsung-galaxy-j5-prime,Samsung Galaxy J5 Prime,360 px,640 px,2,720 px,1280 px,5 in,294 ppi,16:9,Android 6.0.1,,Samsung,smartphone,2016
+samsung-galaxy-j6,Samsung Galaxy J6,360 px,740 px,2,720 px,1480 px,5.6 in,293 ppi,18.5:9,Android 8.0,,Samsung,smartphone,2018
+samsung-galaxy-j7,Samsung Galaxy J7,360 px,640 px,2,720 px,1280 px,5.5 in,267 ppi,16:9,Android 6.0.1,,Samsung,smartphone,2015
+samsung-galaxy-j7-prime,Samsung Galaxy J7 Prime,360 px,640 px,3,1080 px,1920 px,5.5 in,401 ppi,16:9,Android 6.0.1,,Samsung,smartphone,2016
+samsung-galaxy-j7-prime2,Samsung Galaxy J7 Prime2,412 px,732 px,2.625,1080 px,1920 px,5.5 in,401 ppi,16:9,Android 7.0,,Samsung,smartphone,2018
+samsung-galaxy-j7-pro,Samsung Galaxy J7 Pro,360 px,640 px,3,1080 px,1920 px,5.5 in,401 ppi,16:9,Android 7.0,,Samsung,smartphone,2017
+samsung-galaxy-j8,Samsung Galaxy J8,360 px,740 px,2,720 px,1480 px,6 in,274 ppi,18.5:9,Android 8.0,,Samsung,smartphone,2018
+samsung-galaxy-note20,Samsung Galaxy Note20,412 px,915 px,2.625,1080 px,2400 px,6.7 in,393 ppi,20:9,Android 10.0,,Samsung,smartphone,2020
+samsung-galaxy-note8,Samsung Galaxy Note8,414 px,846 px,3.5,1440 px,2960 px,6.3 in,521 ppi,18.5:9,Android 7.1.1,,Samsung,smartphone,2017
+samsung-galaxy-note9,Samsung Galaxy Note9,414 px,846 px,3.5,1440 px,2960 px,6.4 in,516 ppi,18.5:9,Android 8.1,,Samsung,smartphone,2018
+samsung-galaxy-on8,Samsung Galaxy On8,360 px,640 px,3,1080 px,1920 px,5.5 in,401 ppi,16:9,Android 6.0.1,,Samsung,smartphone,2016
+samsung-galaxy-s10,Samsung Galaxy S10,360 px,760 px,4,1440 px,3040 px,6.1 in,550 ppi,19:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-s10-lite,Samsung Galaxy S10 Lite,412 px,914 px,2.625,1080 px,2400 px,6.7 in,394 ppi,20:9,Android 10.0,,Samsung,smartphone,2020
+samsung-galaxy-s10-plus,Samsung Galaxy S10+,412 px,869 px,3.5,1440 px,3040 px,6.4 in,522 ppi,19:9,Android 9.0,,Samsung,smartphone,2019
+samsung-galaxy-s20-fe,Samsung Galaxy S20 FE,412 px,914 px,2.625,1080 px,2400 px,6.5 in,407 ppi,20:9,Android 10.0,,Samsung,smartphone,2020
+samsung-galaxy-s20-plus,Samsung Galaxy S20+,384 px,854 px,3.75,1440 px,3200 px,6.7 in,525 ppi,20:9,Android 10.0,,Samsung,smartphone,2020
+samsung-galaxy-s20-ultra,Samsung Galaxy S20 Ultra,412 px,915 px,3.5,1440 px,3200 px,6.9 in,511 ppi,20:9,Android 10.0,,Samsung,smartphone,2020
+samsung-galaxy-s21,Samsung Galaxy S21,360 px,800 px,3,1080 px,2400 px,6.2 in,424 ppi,20:9,Android 11,,Samsung,smartphone,2021
+samsung-galaxy-s21-plus,Samsung Galaxy S21+,360 px,800 px,3,1080 px,2400 px,6.7 in,393 ppi,20:9,Android 11,,Samsung,smartphone,2021
+samsung-galaxy-s8,Samsung Galaxy S8,360 px,740 px,4,1440 px,2960 px,5.8 in,570 ppi,18.5:9,Android 7.0,,Samsung,smartphone,2017
+samsung-galaxy-s8-plus,Samsung Galaxy S8+,360 px,740 px,4,1440 px,2960 px,6.2 in,529 ppi,18.5:9,Android 7.0,,Samsung,smartphone,2017
+samsung-galaxy-s9,Samsung Galaxy S9,360 px,740 px,4,1440 px,2960 px,5.8 in,570 ppi,18.5:9,Android 8.0,,Samsung,smartphone,2018
+samsung-galaxy-s9-plus,Samsung Galaxy S9+,360 px,740 px,4,1440 px,2960 px,6.2 in,529 ppi,18.5:9,Android 8.0,,Samsung,smartphone,2018
+samsung-galaxy-z-flip,Samsung Galaxy Z Flip,412 px,1004 px,2.625,1080 px,2636 px,6.7 in,425 ppi,22:9,Android 10.0,,Samsung,smartphone,2020
+samsung-note10,Samsung Note10,412 px,869 px,2.625,1080 px,2280 px,6.3 in,401 ppi,19:9,Android 9.0,,Samsung,smartphone,2019
+samsung-note10-plus,Samsung Note10+,412 px,869 px,3.5,1440 px,3040 px,6.8 in,498 ppi,19:9,Android 9.0,,Samsung,smartphone,2019
+samsung-s6,Samsung S6,360 px,640 px,4,1440 px,2560 px,5.1 in,577 ppi,16:9,Android 5.0.2,,Samsung,smartphone,2015
+samsung-s6-edge,Samsung S6 edge,360 px,640 px,4,1440 px,2560 px,5.1 in,577 ppi,16:9,Android 5.0.2,,Samsung,smartphone,2015
+samsung-s7,Samsung S7,360 px,640 px,4,1440 px,2560 px,5.1 in,577 ppi,16:9,Android 6.0,,Samsung,smartphone,2016
+samsung-s7-edge,Samsung S7 edge,360 px,640 px,4,1440 px,2560 px,5.5 in,534 ppi,16:9,Android 6.0,,Samsung,smartphone,2016
+sony-xperia-x,Sony Xperia X,360 px,640 px,3,1080 px,1920 px,5 in,441 ppi,16:9,Android 6.0.1,,Sony,smartphone,2016
+sony-xperia-xz,Sony Xperia XZ,360 px,640 px,3,1080 px,1920 px,5.2 in,424 ppi,16:9,Android 6.0.1,,Sony,smartphone,2016
+xiaomi-redmi-note-7,Xiaomi Redmi Note 7,393 px,851 px,2.75,1080 px,2340 px,6.3 in,409 ppi,19.5:9,Android 9.0,,Xiaomi,smartphone,2019
+xiaomi-redmi-note-8,Xiaomi Redmi Note 8,393 px,851 px,2.75,1080 px,2340 px,6.3 in,409 ppi,19.5:9,Android 9.0,,Xiaomi,smartphone,2019
+xiaomi-redmi-note-8-pro,Xiaomi Redmi Note 8 Pro,393 px,851 px,2.75,1080 px,2340 px,6.5 in,395 ppi,19.5:9,Android 9.0,,Xiaomi,smartphone,2019
+xiaomi-redmi-note-9-pro,Xiaomi Redmi Note 9 Pro,393 px,873 px,2.75,1080 px,2400 px,6.7 in,395 ppi,20:9,Android 10.0,,Xiaomi,smartphone,2020
+zebra-mc330,Zebra MC330,480 px,800 px,1,480 px,800 px,,,5:3,Android 10.0,"Mozilla/5.0 (Linux; Android 10; MC3300) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.260 Mobile Safari/537.36",Zebra,smartphone,
