@@ -12,6 +12,7 @@ import { BACKEND_FEATURES_ENABLED, SDK_EVENT_LOG_ENABLED, VALIDATOR_ENABLED } fr
 import "./preview-video-modal";
 import "./recordings-list-modal";
 import { ANDROID_DEVICES, type DeviceMockup } from "./android-devices";
+import { PRIORITY_DEVICES, PRIORITY_GROUP, GOOGLE_ADS_SUBGROUP, STANDARD_SUBGROUP, mergeDevices } from "./priority-devices";
 
 type PreviewDeviceOption = {
   name: string;
@@ -22,6 +23,7 @@ type PreviewDeviceOption = {
   mockup?: DeviceMockup;
   // Library section heading. Fixed-orientation entries store their portrait size in width/height.
   group?: string;
+  subgroup?: string;
   orientation?: 'portrait' | 'landscape';
 };
 
@@ -74,6 +76,9 @@ export class PlayablePreviewer extends ComponentBase {
   @state() private _customH: number = 844;
   private _customDeviceIdx: number | null = null;
   @state() private _handMode: boolean = false;
+  @state() private _sidebarW: number = PlayablePreviewer._loadSidebarWidth();
+  private static readonly SIDEBAR_MIN = 240;
+  private static readonly SIDEBAR_MAX = 640;
   private _panStart: { x: number; y: number; left: number; top: number } | null = null;
 
   private _adOverlayTimer?: ReturnType<typeof setInterval>;
@@ -84,8 +89,10 @@ export class PlayablePreviewer extends ComponentBase {
   private _onDocumentKeyDown?: (e: KeyboardEvent) => void;
 
   // Android devices with a downloaded frame (see android-devices.ts).
-  devices: PreviewDeviceOption[] = ANDROID_DEVICES;
-  selectedDeviceIdx: number = 0;
+  // Order = dedupe priority: Priority entries win, then real devices.
+  devices: PreviewDeviceOption[] = mergeDevices<PreviewDeviceOption>(PRIORITY_DEVICES, ANDROID_DEVICES);
+  // Default stays on the first real device (with a mockup), not the first Priority entry.
+  selectedDeviceIdx: number = Math.max(0, this.devices.findIndex((d) => d.mockup));
   isPortrait: boolean = true;
 
   get selectedDevice() {
@@ -1222,14 +1229,6 @@ export class PlayablePreviewer extends ComponentBase {
     `;
   }
 
-  private _getReadinessSummary() {
-    const checks = (this.validationResults?.categories ?? []).flatMap(category => category.checks);
-    const passed = checks.filter(check => check.passed).length;
-    const failing = checks.filter(check => !check.passed);
-    const score = checks.length > 0 ? Math.round((passed / checks.length) * 100) : null;
-    return { total: checks.length, failing, score };
-  }
-
   private _getFilteredDevices() {
     const query = this._deviceQuery.trim().toLowerCase();
     return this.devices
@@ -1298,6 +1297,44 @@ export class PlayablePreviewer extends ComponentBase {
     }
     const clamped = Math.min(2, Math.max(0.2, Math.round(value * 100) / 100));
     this._stageScale = clamped;
+  }
+
+  private static _loadSidebarWidth(): number {
+    try {
+      const saved = Number(localStorage.getItem('preview-sidebar-width'));
+      if (saved >= PlayablePreviewer.SIDEBAR_MIN && saved <= PlayablePreviewer.SIDEBAR_MAX) {
+        return saved;
+      }
+    } catch {
+      // Storage unavailable: use the default width.
+    }
+    return 300;
+  }
+
+  // Drag the divider between the stage and the sidebar to resize the sidebar (desktop layout only).
+  private _startSidebarResize(e: PointerEvent) {
+    e.preventDefault();
+    const handle = e.currentTarget as HTMLElement;
+    const startX = e.clientX;
+    const startW = this._sidebarW;
+    handle.setPointerCapture(e.pointerId);
+    const onMove = (ev: PointerEvent) => {
+      const next = startW + (startX - ev.clientX);
+      this._sidebarW = Math.min(PlayablePreviewer.SIDEBAR_MAX, Math.max(PlayablePreviewer.SIDEBAR_MIN, next));
+    };
+    const onUp = () => {
+      handle.removeEventListener('pointermove', onMove);
+      handle.removeEventListener('pointerup', onUp);
+      handle.removeEventListener('pointercancel', onUp);
+      try {
+        localStorage.setItem('preview-sidebar-width', String(this._sidebarW));
+      } catch {
+        // Storage unavailable: width lasts for this session only.
+      }
+    };
+    handle.addEventListener('pointermove', onMove);
+    handle.addEventListener('pointerup', onUp);
+    handle.addEventListener('pointercancel', onUp);
   }
 
   private _toggleHandMode() {
@@ -1425,12 +1462,24 @@ export class PlayablePreviewer extends ComponentBase {
       return html`<p class="col-span-2 text-sm italic text-slate-500 dark:text-slate-400">No devices match.</p>`;
     }
     const heading = 'col-span-2 pt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500';
-    const google = devices.filter(({ device }) => device.group === 'Google');
-    const others = devices.filter(({ device }) => device.group !== 'Google');
-    return html`
-      ${google.length > 0 ? html`<p class="${heading}">Google</p>${google.map(({ device, idx }) => this._renderDeviceCard(device, idx))}` : null}
-      ${others.length > 0 ? html`<p class="${heading}">Other devices</p>${others.map(({ device, idx }) => this._renderDeviceCard(device, idx))}` : null}
-    `;
+    const subHeading = 'col-span-2 pt-0.5 text-[11px] font-medium text-slate-500 dark:text-slate-400';
+    const priority = devices.filter(({ device }) => device.group === PRIORITY_GROUP);
+    const prioritySubs = [GOOGLE_ADS_SUBGROUP, STANDARD_SUBGROUP]
+      .map((title) => ({ title, items: priority.filter(({ device }) => device.subgroup === title) }))
+      .filter(({ items }) => items.length > 0);
+    const sections = [
+      { title: PRIORITY_GROUP, items: [] as typeof devices, content: html`${prioritySubs.map(({ title, items }) => html`<p class="${subHeading}">${title}</p>${items.map(({ device, idx }) => this._renderDeviceCard(device, idx))}`)}`, show: priority.length > 0 },
+      { title: 'Google', items: devices.filter(({ device }) => device.group === 'Google') },
+      { title: 'Other devices', items: devices.filter(({ device }) => !device.group) },
+    ];
+    return html`${sections.map((section) => {
+      if ('show' in section) {
+        return section.show ? html`<p class="${heading}">${section.title}</p>${section.content}` : null;
+      }
+      return section.items.length > 0
+        ? html`<p class="${heading}">${section.title}</p>${section.items.map(({ device, idx }) => this._renderDeviceCard(device, idx))}`
+        : null;
+    })}`;
   }
 
   private _renderDeviceCard(device: PreviewDeviceOption, idx: number) {
@@ -1501,25 +1550,6 @@ export class PlayablePreviewer extends ComponentBase {
     `;
   }
 
-  private _renderReadinessRing(score: number) {
-    const radius = 20;
-    const circumference = 2 * Math.PI * radius;
-    const color = score >= 80 ? 'text-green-600' : score >= 50 ? 'text-amber-500' : 'text-red-600';
-    return html`
-      <svg width="52" height="52" viewBox="0 0 48 48" class="shrink-0">
-        <circle cx="24" cy="24" r="${radius}" fill="none" stroke="currentColor" stroke-opacity="0.15" stroke-width="4" class="text-slate-500" />
-        <circle
-          cx="24" cy="24" r="${radius}" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"
-          stroke-dasharray="${circumference}"
-          stroke-dashoffset="${circumference * (1 - score / 100)}"
-          transform="rotate(-90 24 24)"
-          class="${color}"
-        />
-        <text x="24" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="currentColor" class="${color}">${score}</text>
-      </svg>
-    `;
-  }
-
   render() {
     const device = this.selectedDevice;
     const width = (this.isPortrait ? device.width : device.height) || 375;
@@ -1527,7 +1557,6 @@ export class PlayablePreviewer extends ComponentBase {
     // Mockup frame: scale so the PNG's transparent screen opening matches the device viewport exactly.
     const mockup = device.mockup ? this._getFrameLayout(device.mockup, width, height) : undefined;
     const hasContent = !!this.zipPreviewUrl || !!this.pageContent;
-    const readiness = this._getReadinessSummary();
     const filteredDevices = this._getFilteredDevices();
     const scalePercent = Math.round(this._stageScale * 100);
 
@@ -1700,8 +1729,19 @@ export class PlayablePreviewer extends ComponentBase {
             </div>
           </div>
 
+          <!-- Drag handle between the stage and the sidebar -->
+          <div
+            role="separator"
+            aria-orientation="vertical"
+            title="Drag to resize"
+            @pointerdown=${(e: PointerEvent) => this._startSidebarResize(e)}
+            class="group hidden w-1.5 shrink-0 cursor-col-resize touch-none items-center justify-center bg-slate-200 transition-colors hover:bg-red-400 active:bg-red-500 dark:bg-slate-800 lg:flex"
+          >
+            <span class="h-8 w-0.5 rounded bg-slate-400 group-hover:bg-white"></span>
+          </div>
+
           <!-- Sidebar -->
-          <aside class="flex w-full shrink-0 flex-col gap-6 overflow-y-auto border-t border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 lg:w-[300px] lg:border-l lg:border-t-0">
+          <aside style="--sidebar-w: ${this._sidebarW}px" class="flex w-full shrink-0 flex-col gap-6 overflow-y-auto border-t border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 lg:w-[var(--sidebar-w)] lg:border-t-0">
             <!-- Viewport library -->
             <section class="flex flex-col gap-3">
               <div class="flex items-center justify-between">
@@ -1769,47 +1809,6 @@ export class PlayablePreviewer extends ComponentBase {
                 />
                 <span class="w-10 text-right font-mono text-xs tabular-nums text-slate-600 dark:text-slate-300">${scalePercent}%</span>
               </div>
-            </section>
-
-            <!-- Readiness report -->
-            <section class="flex flex-col gap-3">
-              <div class="flex items-center justify-between">
-                <h3 class="text-sm font-semibold text-slate-900 dark:text-white">Readiness report</h3>
-                ${readiness.failing.length > 0
-                  ? html`<span class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-900/40 dark:text-red-300">${readiness.failing.length}</span>`
-                  : null}
-              </div>
-              <div class="flex items-center gap-4 rounded-lg border p-4 ${readiness.score !== null && readiness.score < 80
-                ? 'border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-900/20'
-                : 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/50'}">
-                ${readiness.score !== null
-                  ? this._renderReadinessRing(readiness.score)
-                  : html`<div class="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full border-2 border-dashed border-slate-300 text-slate-400 dark:border-slate-600">–</div>`}
-                <div class="min-w-0">
-                  <p class="text-sm font-semibold text-slate-900 dark:text-white">
-                    ${readiness.score === null
-                      ? 'No readiness checks yet'
-                      : readiness.failing.length > 0
-                      ? 'Issues need attention'
-                      : 'All checks passed'}
-                  </p>
-                  <p class="text-xs text-slate-500 dark:text-slate-400">
-                    ${readiness.score === null
-                      ? 'Results appear once the playable has been validated.'
-                      : `${readiness.total - readiness.failing.length} of ${readiness.total} checks passed`}
-                  </p>
-                </div>
-              </div>
-              ${readiness.failing.length > 0 ? html`
-                <ul class="flex flex-col gap-1.5 text-xs">
-                  ${readiness.failing.slice(0, 5).map(check => html`
-                    <li class="flex items-start gap-2 text-red-600 dark:text-red-400">
-                      <span class="material-icons-outlined shrink-0" style="font-size:14px">error</span>
-                      <span>${check.name}</span>
-                    </li>
-                  `)}
-                </ul>
-              ` : null}
             </section>
 
             ${this._renderSidePanels()}
